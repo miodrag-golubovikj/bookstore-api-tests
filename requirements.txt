@@ -4,3 +4,4 @@ allure-pytest
 pytest-xdist
 jsonschema
 python-dotenv
+pyyaml
