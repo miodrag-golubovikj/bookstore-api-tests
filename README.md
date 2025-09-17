@@ -6,6 +6,10 @@ Automated REST API tests for FakeRestAPI (Books and Authors endpoint).
 - Allure for reporting with rich debug output implemented for better maintainability.
 - Dockerized test execution
 - GitHub Actions CI/CD implemented
+  - Implemented step to generate the Allure output in HTML and publishes it int GH pages.
+  - GitHub Pages → serves the report at:
+    - https://miodrag-golubovikj.github.io/bookstore-api-tests/
+
 
 ## ✅ Test Coverage (20 Tests)
 ### This test suite has 20 test cases across Books and Authors APIs, covering:
