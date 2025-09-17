@@ -33,6 +33,8 @@ jobs:
       run: |
         mkdir -p allure-results
         docker cp test-runner:/app/reports/allure-results ./allure-results || echo "No allure results found"
+        echo "Contents of allure-results:"
+        ls -R allure-results || echo "No allure-results directory found"
 
     # 6. Upload Allure results as artifact (always run)
     - name: Upload Allure results
