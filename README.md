@@ -1,12 +1,19 @@
 # 📚 FakeRestAPI Automation Project for Interview
-Automated REST API tests for FakeRestAPI (Books endpoint).
+Automated REST API tests for FakeRestAPI (Books and Authors endpoint).
 
 ## 🧰 Tech Stack
 - Python + Pytest + Requests
-- Allure Reports
-- Docker
-- GitHub Actions CI/CD
+- Allure for reporting with rich debug output implemented for better maintainability.
+- Dockerized test execution
+- GitHub Actions CI/CD implemented
 
+## ✅ Test Coverage (20 Tests)
+### This test suite has 20 test cases across Books and Authors APIs, covering:
+- GET all books
+- GET book by ID (valid/invalid)
+- POST book (valid/missing fields/duplicate)
+- PUT book (valid/invalid)
+- DELETE book (valid/invalid)
 
 ## 🚀 Setup
 
@@ -22,3 +29,4 @@ Automated REST API tests for FakeRestAPI (Books endpoint).
 ```bash
 git clone https://github.com/miodrag-golubovikj/bookstore-api-tests.git
 cd bookstore-api-tests
+

@@ -1,23 +1,23 @@
 import pytest
 import allure
 from src.clients.books_client import BooksClient
+from src.utils.debug import log_response, log_request_payload
 
 client = BooksClient()
 
 @allure.feature("Books API")
 @allure.story("Retrieve all books")
-@allure.severity(allure.severity_level.NORMAL)
 def test_get_all_books():
-    with allure.step("Send GET request to fetch all books"):
-        response = client.get_all_books()
-    with allure.step("Validate response"):
-        assert response.status_code == 200
-        assert isinstance(response.json(), list)
+    response = client.get_all_books()
+    log_response(response, "GET /Books")
+    assert response.status_code == 200
+    assert isinstance(response.json(), list)
 
 @allure.feature("Books API")
 @allure.story("Retrieve book by valid ID")
 def test_get_book_by_valid_id():
     response = client.get_book_by_id(1)
+    log_response(response, "GET /Books/1")
     assert response.status_code == 200
     assert response.json()['id'] == 1
 
@@ -25,6 +25,7 @@ def test_get_book_by_valid_id():
 @allure.story("Retrieve book by invalid ID")
 def test_get_book_by_invalid_id():
     response = client.get_book_by_id(9999)
+    log_response(response, "GET /Books/9999")
     assert response.status_code == 404
 
 @allure.feature("Books API")
@@ -38,7 +39,9 @@ def test_create_book():
         "excerpt": "Excerpt",
         "publishDate": "2025-09-17T00:00:00Z"
     }
+    log_request_payload(payload)
     response = client.create_book(payload)
+    log_response(response, "POST /Books")
     assert response.status_code == 200
     assert response.json()['title'] == "New Book"
 
@@ -46,7 +49,9 @@ def test_create_book():
 @allure.story("Create book with missing fields")
 def test_create_book_with_missing_fields():
     payload = {"id": 1002}
+    log_request_payload(payload)
     response = client.create_book(payload)
+    log_response(response, "POST /Books (missing fields)")
     assert response.status_code == 400
 
 @allure.feature("Books API")
@@ -60,7 +65,9 @@ def test_update_book():
         "excerpt": "Updated excerpt",
         "publishDate": "2025-09-17T00:00:00Z"
     }
+    log_request_payload(payload)
     response = client.update_book(1, payload)
+    log_response(response, "PUT /Books/1")
     assert response.status_code == 200
     assert response.json()['title'] == "Updated Title"
 
@@ -75,19 +82,23 @@ def test_update_book_invalid_id():
         "excerpt": "None",
         "publishDate": "2025-09-17T00:00:00Z"
     }
+    log_request_payload(payload)
     response = client.update_book(9999, payload)
+    log_response(response, "PUT /Books/9999")
     assert response.status_code == 404
 
 @allure.feature("Books API")
 @allure.story("Delete existing book")
 def test_delete_book():
     response = client.delete_book(1001)
+    log_response(response, "DELETE /Books/1001")
     assert response.status_code == 200
 
 @allure.feature("Books API")
 @allure.story("Delete book with invalid ID")
 def test_delete_book_invalid_id():
     response = client.delete_book(9999)
+    log_response(response, "DELETE /Books/9999")
     assert response.status_code == 404
 
 @allure.feature("Books API")
@@ -101,5 +112,7 @@ def test_create_duplicate_book():
         "excerpt": "Duplicate",
         "publishDate": "2025-09-17T00:00:00Z"
     }
+    log_request_payload(payload)
     response = client.create_book(payload)
+    log_response(response, "POST /Books (duplicate)")
     assert response.status_code in [400, 409]
