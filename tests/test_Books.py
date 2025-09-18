@@ -29,11 +29,11 @@ def test_get_book_by_invalid_id():
     assert response.status_code == 404
 
 @allure.feature("Books API")
-@allure.story("Create a new book")
+@allure.story("Create a New Robot Book")
 def test_create_book():
     payload = {
         "id": 1001,
-        "title": "New Book",
+        "title": "New Robot Book",
         "description": "Test book",
         "pageCount": 123,
         "excerpt": "Excerpt",
@@ -43,7 +43,7 @@ def test_create_book():
     response = client.create_book(payload)
     log_response(response, "POST /Books")
     assert response.status_code == 200
-    assert response.json()['title'] == "New Book"
+    assert response.json()['title'] == "New Robot Book"
 
 @allure.feature("Books API")
 @allure.story("Create book with missing fields")

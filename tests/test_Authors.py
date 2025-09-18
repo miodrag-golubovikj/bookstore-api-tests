@@ -34,14 +34,14 @@ def test_create_author():
     payload = {
         "id": 2001,
         "idBook": 1,
-        "firstName": "John",
-        "lastName": "Doe"
+        "firstName": "Mickey",
+        "lastName": "Mouse"
     }
     log_request_payload(payload)
     response = client.create_author(payload)
     log_response(response, "POST /Authors")
     assert response.status_code == 200
-    assert response.json()['firstName'] == "John"
+    assert response.json()['firstName'] == "Mickey"
 
 @allure.feature("Authors API")
 @allure.story("Create author with missing fields")
