@@ -1,7 +1,7 @@
-# 📚 FakeRestAPI Automation Project for Interview
+#  FakeRestAPI Automation Project for Interview
 Automated REST API tests for FakeRestAPI (Books and Authors endpoint).
 
-## 🧰 Tech Stack
+## Tech Stack
 - Python + Pytest + Requests
 - Allure for reporting with rich debug output implemented for better maintainability.
 - Dockerized test execution
@@ -11,7 +11,7 @@ Automated REST API tests for FakeRestAPI (Books and Authors endpoint).
     - https://miodrag-golubovikj.github.io/bookstore-api-tests/
 
 
-## ✅ Test Coverage (20 Tests)
+## Test Coverage (20 Tests)
 ### This test suite has 20 test cases across Books and Authors APIs, covering:
 - GET all books
 - GET book by ID (valid/invalid)
@@ -19,7 +19,7 @@ Automated REST API tests for FakeRestAPI (Books and Authors endpoint).
 - PUT book (valid/invalid)
 - DELETE book (valid/invalid)
 
-## 🚀 Setup
+## Setup
 
 ### Prerequisites
 - Python 3.11+

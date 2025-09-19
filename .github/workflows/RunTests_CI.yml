@@ -23,28 +23,7 @@ jobs:
     - name: Build Docker image
       run: docker build -t fake-restapi-tests .
 
-    # 4. Run tests in container (keep container after exit)
-    - name: Run tests in container
-      run: docker run --name test-runner fake-restapi-tests || true
-
-    # 5. Copy Allure results (always run)
-    - name: Copy Allure results
-      if: always()
-      run: |
-        mkdir -p allure-results
-        docker cp test-runner:/app/reports/allure-results ./allure-results || echo "No allure results found"
-        echo "Contents of allure-results:"
-        ls -R allure-results || echo "No allure-results directory found"
-
-    # 6. Upload Allure results as artifact (always run)
-    - name: Upload Allure results
-      if: always()
-      uses: actions/upload-artifact@v4
-      with:
-        name: allure-results
-        path: allure-results
-
-    # 7. Install Allure CLI (fail if install fails)
+    # 4. Install Allure CLI (fail if install fails)
     - name: Install Allure CLI
       id: install_allure
       if: always()
@@ -66,7 +45,18 @@ jobs:
         sudo ln -s /opt/allure/allure-*/bin/allure /usr/local/bin/allure
         allure --version
 
-    # 8. Generate Allure HTML report (only if install succeeded)
+    # 5. Run tests in container and generate allure results
+    - name: Run tests in container
+      if: always()
+      run: |
+        mkdir -p allure-results
+        docker run --name test-runner fake-restapi-tests || true
+        docker cp test-runner:/app/reports/allure-results ./allure-results || echo "No allure results found"
+        docker rm test-runner
+        echo "Contents of allure-results:"
+        ls -R allure-results || echo "No allure-results directory found"
+
+    # 6. Generate Allure HTML report (only if install succeeded)
     - name: Generate Allure HTML report
       id: generate_report
       if: steps.install_allure.outcome == 'success'
